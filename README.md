@@ -131,6 +131,10 @@ The most remarkable finding is a **distinctive cross-shaped structure** in the r
 - **High Concentration**: ~90% of "uniqueness variance" captured in just 2 dimensions
 - **Systematic Structure**: Clear evidence of four different types of anomalous sources
 
+![Distinctive Cross Pattern in PCA² Space](cross.png)
+
+*Figure: Visualization of the cross-shaped structure discovered in the PCA² reconstruction error space. Each point represents an X-ray source. The central region contains typical sources, while the four arms highlight distinct anomaly patterns.*
+
 ## 🎯 Key Results & Findings
 
 ### 1. Data Quality Assessment
