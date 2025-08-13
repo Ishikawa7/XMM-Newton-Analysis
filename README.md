@@ -20,6 +20,8 @@ This repository contains a complete analysis pipeline for exploring X-ray source
 **Format**: Slim version containing key measurements for unique X-ray sources  
 **Size**: ~540,000 X-ray sources (after preprocessing: ~280,000 high-quality sources)
 
+**Note**: The public catalogue is usually screened to remove high-background/solar-flare intervals and also mixes MOS & pn cameras.
+
 ### Key Measurements
 
 - **Multi-band X-ray fluxes** (0.2-12.0 keV in various energy bands)
