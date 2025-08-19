@@ -1,6 +1,6 @@
 # XMM-Newton X-ray Source Analysis
 ---
-## ⚠️ Important: after a feedback of domain experts i'm working on a deeper analysis on the complete dataset, not the slim version
+## ⚠️ Important: after a feedback from domain experts i'm working on a deeper analysis on the complete dataset, not the slim version
 ---
 A data science analysis of the **4XMM-DR14** X-ray source catalog from the XMM-Newton space observatory, featuring original dimensionality reduction technique and astronomical data preprocessing.
 
