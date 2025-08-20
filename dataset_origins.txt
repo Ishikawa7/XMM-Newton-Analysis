@@ -1,0 +1,8 @@
+# For repository space reasons i removed the original .csv file datasets (used in the preprocessing) and leaved only the preprocessed versions
+# They can be found here (both slim and complete versions):
+# https://www.cosmos.esa.int/web/xmm-newton/xsa#access
+# (first two on the "Download Full XMM-Newton Catalogues and datasets" table)
+
+# Original files:
+# 4xmm_dr14.csv
+# 4xmm_slim_dr14.csv
