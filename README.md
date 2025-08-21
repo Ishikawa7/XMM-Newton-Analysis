@@ -1,7 +1,5 @@
 # XMM-Newton X-ray Source Analysis
----
-## ⚠️ Important: after a feedback from domain experts i'm working on a deeper analysis on the complete dataset, not the slim version
----
+
 A data science analysis of the **4XMM-DR14** X-ray source catalog from the XMM-Newton space observatory, featuring original dimensionality reduction technique and astronomical data preprocessing.
 
 ## 🌌 Overview
@@ -32,53 +30,10 @@ This repository contains a complete analysis pipeline for exploring X-ray source
 - **Source properties** (spatial extent, detection quality, coordinates)
 - **Temporal information** (observation dates, detection counts)
 
-## 🗂️ Repository Structure
-
-```
-├── README.md                           # This file
-├── requirements.txt                    # Python dependencies
-├── columns_description.md              # Detailed column descriptions
-├── 4xmm_slim_dr14.csv                 # Original raw dataset
-├── 4xmm_slim_dr14_preprocessed.csv    # Cleaned dataset
-├── preprocessing.ipynb                 # Data cleaning and preprocessing pipeline
-├── EDA.ipynb                          # Exploratory Data Analysis
-├── PCA^2.ipynb                        # Advanced PCA² analysis
-└── env/                               # Python virtual environment
-```
-
-## 🛠️ Installation & Setup
-
-### Prerequisites
-- Python 3.8+
-- Jupyter Notebook/Lab
-
-### Installation
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/Ishikawa7/XMM-Newton-Analysis.git
-   cd XMM-Newton-Analysis
-   ```
-
-2. **Create virtual environment**:
-   ```bash
-   python -m venv env
-   source env/bin/activate  # On Windows: env\Scripts\activate
-   ```
-
-3. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Launch Jupyter**:
-   ```bash
-   jupyter notebook
-   ```
-
 ### Dependencies
 
 - **pandas** (≥1.3.0): Data manipulation and analysis
+- **polar** (≥1.32.0): Data manipulation and analysis
 - **matplotlib** (≥3.5.0): Visualization and plotting  
 - **scikit-learn** (≥0.24.0): Machine learning and PCA
 - **astropy** (≥5.0.0): Astronomical data handling and time conversions
@@ -135,7 +90,7 @@ The most remarkable finding is a **distinctive cross-shaped structure** in the r
 - **High Concentration**: ~90% of "uniqueness variance" captured in just 2 dimensions
 - **Systematic Structure**: Clear evidence of four different types of anomalous sources
 
-![Distinctive Cross Pattern in PCA² Space](cross.png)
+![Distinctive Cross Pattern in PCA² Space](/output/cross_sc.png)
 
 *Figure: Visualization of the cross-shaped structure discovered in the PCA² reconstruction error space. Each point represents an X-ray source. The central region contains typical sources, while the four arms highlight distinct anomaly patterns.*
 
@@ -155,6 +110,87 @@ The most remarkable finding is a **distinctive cross-shaped structure** in the r
 - **Clear separation** between typical and unusual sources
 - **Quantitative outlier scores** based on reconstruction errors
 - **Prime candidates** for detailed astrophysical follow-up
+
+---
+---
+## UPDATE: Cross Pattern Investigation
+
+### Overview
+After feedback from domain experts I'm worked on a deeper analysis on the complete dataset, not the slim version. Here are the details the investigation into the "cross" pattern that emerged in the anomaly detection analysis of XMM-Newton data, focusing on instrument-specific effects and their impact on anomaly patterns.
+
+### Methodology
+
+#### 1. Full Dataset Analysis
+- **Dataset**: Upgraded from slim version to full dataset
+- **New Features**: Separate columns for each instrument and combinations:
+  - `pn`: PN camera measurements
+  - `mos1`: MOS1 camera measurements  
+  - `mos2`: MOS2 camera measurements
+  - `ep`: Combined instrument measurements
+  - `sc`: Combined instruments and observations
+
+#### 2. Minimal Preprocessing
+- **Filter Applied**: Only non-optimal observations removed (`sum_flag > 0`)
+- **Purpose**: Ensure cross pattern is not an artifact of preprocessing effects
+- **Approach**: Minimal intervention to preserve data integrity
+
+#### 3. Feature Selection Strategy
+- **Focus**: Flux columns only
+- **Exclusions**: Correlated variables (e.g., hardness ratios)
+- **Rationale**: Isolate cross pattern from potential feature correlation/engineering effects
+
+#### 4. Instrument-Specific Analysis
+Systematic analysis performed on individual instruments:
+- **PN-only analysis**: Isolated PN camera data
+- **MOS1-only analysis**: Isolated MOS1 camera data  
+- **MOS2-only analysis**: Isolated MOS2 camera data
+- **Purpose**: Identify potential instrument-mix effects on anomaly patterns
+
+### Key Findings
+
+#### Cross Pattern Persistence
+The cross pattern in PCA space **persists only in PN measurements**, indicating preferred directions for anomalies in the principal component space.
+
+![Cross Pattern only in PN measurements](/output/cross_pn_no_cross_mos1_no_cross_mos2.jpeg)
+PN detail with coloring for hardness (output folder)
+<img src="/output/cross_pn_hardness_color.png" alt="Cross Pattern in PN with coloring" width="1000" height="600"/>
+
+#### Instrument-Specific Behavior
+- **PN Camera**: Clear cross pattern visible in anomaly detection
+- **MOS1 Camera**: Cross pattern absent
+- **MOS2 Camera**: Cross pattern absent
+
+### Interpretation
+
+Two potential explanations for the PN-specific cross pattern:
+
+#### Hypothesis A: Instrumental Artifact
+The PN measurements themselves create the anomaly patterns due to:
+- Inherent characteristics of the PN instrument
+- Systematic measurement biases
+- Instrument-specific noise patterns
+
+#### Hypothesis B: Detection Sensitivity
+The MOS measurements failed to capture this anomaly pattern due to:
+- Lower sensitivity to the specific anomaly types
+- Different instrumental response characteristics
+- Insufficient resolution for pattern detection
+
+#### Hypothesis C: Missmatch observations
+The PN dataset does not perfectly overlap with MOS observations (sharing only ~63.1% with MOS1 and ~76.1% with MOS2).
+- The non-overlapping observations may introduce unique patterns visible only in PN data
+- Differences in observation coverage and exposure can steer the anomaly distribution
+- The cross pattern could partly arise from PN-only detections rather than purely instrumental effects
+
+### Implications
+
+The instrument-specific nature of the cross pattern suggests:
+1. **Anomaly patterns may be instrument-dependent**
+2. **PN camera may be more sensitive to certain anomaly types**
+3. **Combined instrument analysis may mask instrument-specific patterns**
+4. **Future analysis should consider instrument-specific anomaly detection**
+---
+---
 
 ## ⚠️ **Important Limitations & Disclaimers**
 
